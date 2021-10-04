@@ -1,0 +1,151 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="shortcut icon" href="{% static 'img/logo.png' %}" type="image/x-icon">
+    <title>Club Management System</title>
+
+<style>
+.view {
+  height: 100%;
+}
+
+#table{
+    margin-left: 10%;
+}
+.shift{
+    margin-top: 10%;
+}
+.shift{
+    margin-left: 40%;
+    margin-top: 10%;
+}
+.fix {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+.glow {
+  color: rgb(36, 23, 23);
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+.responsive {
+  width: 100%;
+  height: auto;
+}
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+
+.bgtext{
+color: #940000;
+background-color: #E0E0E0;
+text-decoration: none;
+}
+}
+#abc{
+    color:yellow
+}
+</style>
+</head>
+
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href={% url 'Home' %}>Club Management System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href={% url 'Home' %}>Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'About' %}>About</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href={% url 'Form' %}>Request Fund</a>
+                        <a class="dropdown-item" href={% url 'Status' %}>Check Request Status</a>
+                        <div class="dropdown-divider"></div>
+                        <!-- <a class="dropdown-item" href="#">Support</a>
+                        <a class="dropdown-item" href="#">Write for us</a> -->
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+                    {% if user.is_authenticated %}
+                    <li id="abc" class="glow" >Hello, {{user.first_name}}</li>
+                    <li class="glow"><a href={% url 'logout' %}>Logout</a></li>
+                    {% else %}	
+                    <li><a href={% url 'register' %}>Register</a></li>
+                    <li><a href={% url 'login' %}>Login</a></li>
+                    {% endif %}
+        </div>
+    </nav>
+
+    {% block content %}
+
+
+
+    {% endblock %}        
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.6/lib/darkmode-js.min.js"></script>
+
+          <script>
+          const options ={
+            bottom: '50px', // default: '32px'
+            right: '32px', // default: '32px'
+            left: 'unset', // default: 'unset'
+            time: '0.3s', // default: '0.3s'
+            mixColor: '#fff', // default: '#fff'
+            backgroundColor: '#fff',  // default: '#fff'
+            buttonColorDark: '#100f2c',  // default: '#100f2c'
+            buttonColorLight: '#fff', // default: '#fff'
+            saveInCookies: true, // default: true,
+            label: '🌓', // default: ''
+            autoMatchOsTheme: false // default: true
+          }
+          const darkmode = new Darkmode(options);
+          darkmode.showWidget();
+
+            // function addDarkmodeWidget() {
+            //   new Darkmode().showWidget();
+            // }
+            // window.addEventListener('load', addDarkmodeWidget);
+          </script>
+
+
+        <footer class="footer bg-dark text-white foot fix">
+            <div class="text-mid">
+            <p class="float-right "><a href="#">Back to top</a></p>
+            <p class="glow">© 2020-2021 Club Management System, Inc. · </p>
+           
+            </div>
+            
+          </footer>
+    </body>
+</html>

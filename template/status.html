@@ -1,0 +1,64 @@
+<script>
+    window.setInterval('refresh()', 2000);
+
+    // Refresh or reload page.
+    function refresh() {
+        window .location.reload();
+    }
+</script>
+{% extends 'base.html' %}
+
+{% block content %}
+ 
+    <h5>------Request details----- </h5>
+    {% if req %}   
+    
+    <table id="table">
+        <th>email</th>
+        <th>clubname</th>
+        <th>contact</th>
+        <th>request type</th>
+        <th>request purpose</th>       
+        <th>Allotment Status</th>
+        <!-- <th>Management Comments</th> -->
+        {% for r in req %}
+  <tr>
+      <td>{{r.email}}</td>
+      <td>{{r.ClubName}}</td>
+      <td>{{r.Contact}}</td>
+      <td>{{r.req_type}}</td>
+      <td>{{r.req_purpose}}</td>
+      <td>
+        {% if perms.dash.change_form  %}
+            {% if r.alloted == 0 %}
+            <a href="{% url 'student_approve' user_id=r.id %} " class="btn btn-success" >Approve</a>
+            <a class="btn btn-danger" href="{% url 'student_disapprove' user_id=r.id %}" >Disapprove</a>
+            {% elif r.alloted == 1 %}
+            <button class="btn btn-warning"  disabled="disabled" data-toggle="modal" data-target="#reply_modal">Approved</button>
+            <a class="btn btn-danger" href="{% url 'student_disapprove' user_id=r.id %}" >Disapprove</a>
+            {% elif r.alloted == 0 %}
+            <button class="btn btn-warning" disabled="disabled" data-toggle="modal" data-target="#reply_modal">Queued</button>
+            <a href="{% url 'student_approve' user_id=r.id %} " class="btn btn-success" >Approve</a>
+            {% else %}
+            <button class="btn btn-danger" data-toggle="modal" disabled="disabled" data-target="#reply_modal">Disapproved</button>
+            <a href="{% url 'student_reset' user_id=r.id %} " class="btn btn-success" >Reset</a>
+            {% endif %}
+            {% else %}
+                {% if r.alloted == 0 %}
+                    <h3>queued</h3>
+                {% elif r.alloted == 1 %}
+                    <h3>alloted</h3>
+                {% else %}
+                    <h3>declined</h3>
+                {% endif %}
+        {% endif %} 
+    </td>
+       
+  </tr>
+{% endfor %}
+</table>
+    {% else %}
+        <h1>No data</h1>
+    {% endif %}
+</table>        
+{% endblock %}
